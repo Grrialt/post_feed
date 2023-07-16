@@ -1,0 +1,26 @@
+.inputField {
+  padding: 10px;
+  border-radius: 5px;
+  flex-grow: 1
+}
+
+.dropdownContainer {
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+  margin-top: 5px;
+  z-index: 99999;
+
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  color: var(--bg)
+}
+
+.dropdownItem:hover {
+  background-color: var(--primary);
+  color: white;
+}
