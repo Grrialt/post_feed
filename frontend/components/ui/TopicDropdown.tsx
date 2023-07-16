@@ -28,7 +28,9 @@ const TopicDropdown: React.FC = () => {
     const value = event.target.value;
 
     // Only update input if all words start with '#' or if it's empty
-    const allWordsStartWithHash = value.split(' ').every((word) => word.startsWith('#') || word === '');
+    const allWordsStartWithHash = value
+      .split(' ')
+      .every((word) => word.startsWith('#') || word === '');
 
     if (allWordsStartWithHash) {
       setInput(value);
@@ -38,7 +40,7 @@ const TopicDropdown: React.FC = () => {
         setShowDropdown(true);
       } else {
         setShowDropdown(false);
-      }git remote add origin https://github.com/Grrialt/post_feed.git
+      }
     }
   };
 
@@ -56,8 +58,8 @@ const TopicDropdown: React.FC = () => {
         value={input}
         onChange={handleInputChange}
         className="inputField"
-        autoComplete='off'
-        placeholder= "topic"
+        autoComplete="off"
+        placeholder="topic"
       />
       {showDropdown && (
         <div className="dropdownContainer">
