@@ -1,9 +1,9 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import TopicDropdown from './TopicDropdown';
 import './Form.scss';
 
 interface FormProps {
-  onSubmit: (e: FormEvent) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   currentAccountId: string;
 }
 

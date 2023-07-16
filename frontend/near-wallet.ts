@@ -1,76 +1,91 @@
-/* A helper file that simplifies using the wallet selector */
-
-// near api js
 import { providers } from 'near-api-js';
-
-// wallet selector UI
 import '@near-wallet-selector/modal-ui/styles.css';
 import { setupModal } from '@near-wallet-selector/modal-ui';
+// @ts-ignore
 import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
+// @ts-ignore
 import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
-
-// wallet selector options
-import { setupWalletSelector } from '@near-wallet-selector/core';
+import { NetworkId, setupWalletSelector } from '@near-wallet-selector/core';
 import { setupLedger } from '@near-wallet-selector/ledger';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
+
+interface WalletConfig {
+  createAccessKeyFor?: string;
+  network?: NetworkId;
+}
+
+interface MethodOptions {
+  contractId: string;
+  method: string;
+  args?: object;
+  gas?: string;
+  deposit?: string | null;
+}
 
 const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
 
-// Wallet that simplifies using the wallet selector
 export class Wallet {
-  walletSelector;
-  wallet;
-  network;
-  createAccessKeyFor;
+  walletSelector: any; // Replace with actual WalletSelector type
+  wallet: any; // Replace with actual Wallet type
+  network: NetworkId;
+  createAccessKeyFor: string | undefined | null;
+  accountId: string | undefined | null;
 
-  constructor({ createAccessKeyFor = undefined, network = 'testnet' }) {
-    // Login to a wallet passing a contractId will create a local
-    // key, so the user skips signing non-payable transactions.
-    // Omitting the accountId will result in the user being
-    // asked to sign all transactions.
-    this.createAccessKeyFor = createAccessKeyFor
-    this.network = network
+  constructor({
+    createAccessKeyFor = undefined,
+    network = 'testnet',
+  }: WalletConfig) {
+    this.createAccessKeyFor = createAccessKeyFor;
+    this.network = network;
   }
 
-  // To be called when the website loads
-  async startUp() {
+  async startUp(): Promise<boolean> {
     this.walletSelector = await setupWalletSelector({
       network: this.network,
-      modules: [setupMyNearWallet({ iconUrl: MyNearIconUrl }),
-      setupLedger({ iconUrl: LedgerIconUrl })],
+      modules: [
+        setupMyNearWallet({ iconUrl: MyNearIconUrl }),
+        setupLedger({ iconUrl: LedgerIconUrl }),
+      ],
     });
 
     const isSignedIn = this.walletSelector.isSignedIn();
 
     if (isSignedIn) {
       this.wallet = await this.walletSelector.wallet();
-      this.accountId = this.walletSelector.store.getState().accounts[0].accountId;
+      this.accountId =
+        this.walletSelector.store.getState().accounts[0].accountId;
     }
-    console.log('wallet')
-    console.log(this.wallet)
-    console.log('walletSelector')
-    console.log(this.walletSelector)
 
     return isSignedIn;
   }
 
-  // Sign-in method
-  signIn() {
+  signIn(): void {
     const description = 'Please select a wallet to sign in.';
-    const modal = setupModal(this.walletSelector, { contractId: this.createAccessKeyFor, description });
+    // Check if this.createAccessKeyFor is defined and not null
+    if (this.createAccessKeyFor == null) {
+      // It's undefined or null, throw an error
+      throw new Error('createAccessKeyFor is not defined.');
+    }
+    const modal = setupModal(this.walletSelector, {
+      contractId: this.createAccessKeyFor,
+      description,
+    });
     modal.show();
   }
 
-  // Sign-out method
-  signOut() {
+  signOut(): void {
     this.wallet.signOut();
     this.wallet = this.accountId = this.createAccessKeyFor = null;
     window.location.replace(window.location.origin + window.location.pathname);
   }
 
-  // Make a read-only call to retrieve information from the network
-  async viewMethod({ contractId, method, args = {} }) {
+  async viewMethod({
+    contractId,
+    method,
+    args = {},
+  }: MethodOptions): Promise<any> {
+    // Replace any with actual return type
     const { network } = this.walletSelector.options;
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
@@ -81,14 +96,20 @@ export class Wallet {
       args_base64: Buffer.from(JSON.stringify(args)).toString('base64'),
       finality: 'optimistic',
     });
-    return JSON.parse(Buffer.from(res.result).toString());
+
+    return JSON.parse(Buffer.from((res as any).result).toString());
   }
 
-  // Call a method that changes the contract's state
-  async callMethod({ contractId, method, args = {}, gas = THIRTY_TGAS, deposit = NO_DEPOSIT }) {
-    // Sign a transaction with the "FunctionCall" action
+  async callMethod({
+    contractId,
+    method,
+    args = {},
+    gas = THIRTY_TGAS,
+    deposit = NO_DEPOSIT,
+  }: MethodOptions): Promise<any> {
+    // Replace any with actual return type
     const outcome = await this.wallet.signAndSendTransaction({
-      signerId: this.accountId,
+      signerId: this.accountId!,
       receiverId: contractId,
       actions: [
         {
@@ -103,15 +124,14 @@ export class Wallet {
       ],
     });
 
-    return providers.getTransactionLastResult(outcome)
+    return providers.getTransactionLastResult(outcome);
   }
 
-  // Get transaction result from the network
-  async getTransactionResult(txhash) {
+  async getTransactionResult(txhash: string): Promise<any> {
+    // Replace any with actual return type
     const { network } = this.walletSelector.options;
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
-    // Retrieve transaction result from the network
     const transaction = await provider.txStatus(txhash, 'unnused');
     return providers.getTransactionLastResult(transaction);
   }

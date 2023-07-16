@@ -1,7 +1,7 @@
 import React from 'react';
 import './Messages.scss';
 
-interface Message {
+export interface Message {
   premium?: boolean;
   sender: string;
   time: string;

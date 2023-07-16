@@ -1,24 +1,32 @@
 import 'regenerator-runtime/runtime';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import Form from './components/ui/Form';
 import SignIn from './components/ui/SignIn';
 import Messages from './components/ui/Messages';
-import { Header } from './components/ui/Header';
+
+import { Message } from './components/ui/Messages';
+import { Wallet } from './near-wallet'; // Assuming this is the location of the Wallet class
+import { PostFeed } from './near-interface'; // Assuming this is the location of the PostFeed class
 import './global.scss';
 
-const App = ({ isSignedIn, postFeed, wallet }) => {
-  console.log('Before AppWallet');
-  console.log(wallet);
-  const [messages, setMessages] = useState([]);
+interface Props {
+  isSignedIn: boolean;
+  postFeed: PostFeed;
+  wallet: Wallet;
+}
+
+const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
+  const [messages, setMessages] = useState<Message[]>([]); // Assuming messages are strings
 
   useEffect(() => {
     postFeed.getMessages().then(setMessages);
   }, []);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { fieldset, message, topic, donation } = e.target.elements;
+    const { fieldset, message, topic, donation } = e.currentTarget
+      .elements as any;
 
     fieldset.disabled = true;
 
@@ -33,15 +41,15 @@ const App = ({ isSignedIn, postFeed, wallet }) => {
     message.focus();
   };
 
-  const signIn = () => {
+  const signIn = (): void => {
     wallet.signIn();
   };
 
-  const signOut = () => {
+  const signOut = (): void => {
     wallet.signOut();
   };
-  console.log('After AppWallet');
-  console.log(wallet);
+
+  const accountId = wallet.accountId ?? 'No account id';
 
   return (
     <>
@@ -63,7 +71,7 @@ const App = ({ isSignedIn, postFeed, wallet }) => {
 
         <hr />
         {isSignedIn ? (
-          <Form onSubmit={onSubmit} currentAccountId={wallet.accountId} />
+          <Form onSubmit={onSubmit} currentAccountId={accountId} />
         ) : (
           <SignIn />
         )}
