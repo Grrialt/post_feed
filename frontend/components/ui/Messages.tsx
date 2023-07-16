@@ -38,7 +38,7 @@ function timeAgo(date: Date): string {
 
 function createLinks(topics: string): React.ReactNode {
   const stringsArray = topics.split(' ');
-  console.log(stringsArray);
+
   return stringsArray
     .filter((word) => word.trim() !== '')
     .map((word, index) => (

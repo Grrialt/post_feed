@@ -1,9 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import TopicDropdown from './ui/TopicDropdown';
-import './ui/Form.scss';
+import React, { FormEvent } from 'react';
+import TopicDropdown from './TopicDropdown';
+import './Form.scss';
 
-export default function Form({ onSubmit, currentAccountId }) {
+interface FormProps {
+  onSubmit: (e: FormEvent) => void;
+  currentAccountId: string;
+}
+
+const Form: React.FC<FormProps> = ({ onSubmit, currentAccountId }) => {
   return (
     <form onSubmit={onSubmit}>
       <fieldset id="fieldset">
@@ -38,12 +42,6 @@ export default function Form({ onSubmit, currentAccountId }) {
       </fieldset>
     </form>
   );
-}
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  currentUser: PropTypes.shape({
-    accountId: PropTypes.string.isRequired,
-    balance: PropTypes.string.isRequired,
-  }),
 };
+
+export default Form;

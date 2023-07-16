@@ -1,10 +1,9 @@
 import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from 'react';
-import Form from './components/Form';
+import Form from './components/ui/Form';
 import SignIn from './components/ui/SignIn';
 import Messages from './components/ui/Messages';
 import { Header } from './components/ui/Header';
-import TopicDropdown from './components/ui/TopicDropdown';
 import './global.scss';
 
 const App = ({ isSignedIn, guestBook, wallet }) => {
@@ -26,6 +25,7 @@ const App = ({ isSignedIn, guestBook, wallet }) => {
 
     setMessages(messages);
     message.value = '';
+    topic.value = '';
     donation.value = '0';
     fieldset.disabled = false;
     message.focus();

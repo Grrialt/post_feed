@@ -1,0 +1,25 @@
+#fieldset {
+  p {
+    color: white;
+
+    .messageInput input {
+      color: white;
+    }
+
+    .topic {
+      // Styles for the topic dropdown, if needed
+    }
+  }
+
+  label {
+    color: white;
+  }
+
+  input[type="number"] {
+    // Styles for the number input, if needed
+  }
+
+  button {
+    // Styles for the button, if needed
+  }
+}
