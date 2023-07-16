@@ -26,7 +26,19 @@ function timeAgo(date) {
 
 function createLinks(topics) {
     const stringsArray = topics.split(' ')
-    return stringsArray.map((word, index) => <a style={{color: 'var(--primary)'}} key={index} href={word}>{word} {" "}</a>);
+    console.log(stringsArray)
+    return stringsArray.filter(word => word.trim() !== '').map((word, index) => (
+      <span key={index}>
+        <a 
+          style={{color: 'var(--primary)', textDecoration: 'underline'}} 
+          href={word.startsWith('#') ? word : '#' + word}
+        >
+          {word.startsWith('#') ? word : '#' + word}
+        </a>{" "}
+      </span>
+    ));
+    
+    
 }
 
 
