@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from 'react';
 import Form from './components/Form';
-import SignIn from './components/SignIn';
+import SignIn from './components/ui/SignIn';
 import Messages from './components/ui/Messages';
 import { Header } from './components/ui/Header';
 import TopicDropdown from './components/ui/TopicDropdown';

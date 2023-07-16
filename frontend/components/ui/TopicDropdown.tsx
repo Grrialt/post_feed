@@ -59,7 +59,7 @@ const TopicDropdown: React.FC = () => {
         onChange={handleInputChange}
         className="inputField"
         autoComplete="off"
-        placeholder="topic"
+        placeholder="#topic"
       />
       {showDropdown && (
         <div className="dropdownContainer">
