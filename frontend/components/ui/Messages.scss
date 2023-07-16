@@ -1,0 +1,43 @@
+.message {
+  border: 2px solid var(--secondary);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .sender-name {
+      color: var(--secondary);
+    }
+
+    .message-time {
+      color: var(--placeholder-white);
+    }
+
+    .donation {
+      align-self: flex-start;
+    }
+  }
+
+  .message-text {
+    color: var(--text);
+    margin: .5em 0;
+  }
+
+  .message-topic {
+    color: var(--tertiary);
+  }
+
+  .link {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}

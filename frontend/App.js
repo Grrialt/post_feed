@@ -2,10 +2,10 @@ import 'regenerator-runtime/runtime';
 import React, { useState, useEffect } from 'react';
 import Form from './components/Form';
 import SignIn from './components/SignIn';
-import Messages from './components/Messages';
+import Messages from './components/ui/Messages';
 import { Header } from './components/ui/Header';
 import TopicDropdown from './components/ui/TopicDropdown';
-import './global.scss'
+import './global.scss';
 
 const App = ({ isSignedIn, guestBook, wallet }) => {
   const [messages, setMessages] = useState([]);
@@ -14,7 +14,7 @@ const App = ({ isSignedIn, guestBook, wallet }) => {
     guestBook.getMessages().then(setMessages);
   }, []);
 
-  onSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const { fieldset, message, topic, donation } = e.target.elements;
@@ -45,7 +45,7 @@ const App = ({ isSignedIn, guestBook, wallet }) => {
         <table>
           <tr>
             <td>
-              <h1>Post your feet</h1>
+              <h1>Decentralize Your Posts</h1>
             </td>
             <td>
               {isSignedIn ? (

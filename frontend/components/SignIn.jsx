@@ -4,18 +4,22 @@ export default function SignIn() {
   return (
     <>
       <p>
-          This app demonstrates a key element of NEAR’s UX: once an app has
-          permission to make calls on behalf of a user (that is, once a user
-          signs in), the app can make calls to the blockchain for them without
-          prompting extra confirmation. So you’ll see that if you don’t
-          include a donation, your message gets posted right to the guest book.
+        🚀 Welcome to the exciting world of <strong><i>PostChain</i></strong>, your go-to dApp 
+        for interactive and fun socializing! Our platform has revolutionized
+        the way you share your thoughts by integrating blockchain technology.
+        Once you're signed in 🔑, you can create and post directly to the feed 
+        without additional confirmation. It's hassle-free communication on the blockchain!
       </p>
       <p>
-          But, if you do add a donation, then NEAR will double-check that
-          you’re ok with sending money to this app.
+        Wish to support the blockchain community or your favorite creators? ✨
+        With <strong><i>PostChain</i></strong>, you can make a contribution right through our app. 
+        Rest assured, we uphold the highest standards of financial integrity.
+        That means every donation you make will be double-checked for your 
+        approval before it's recorded on the blockchain. We work on NEAR  blockchain ✌️
       </p>
       <p>
-          Go ahead and sign in to try it out!
+        Ready to start your blockchain-powered journey? Sign in now and let
+        your thoughts ripple across the network!
       </p>
     </>
   );
