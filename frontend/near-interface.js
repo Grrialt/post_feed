@@ -19,12 +19,15 @@ export class PostFeed {
 
   async addMessage(message, topic, donation) {
     const deposit = utils.format.parseNearAmount(donation);
-    return await this.wallet.callMethod({
+    const result = await this.wallet.callMethod({
       contractId: this.contractId,
       method: 'add_message',
       args: { text: message, topic: topic, donation: donation },
       deposit,
     });
+    console.log('result near-interface.ts');
+    console.log(result);
+    return result;
   }
 
   async totalMessages() {

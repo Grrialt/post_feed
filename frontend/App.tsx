@@ -4,10 +4,10 @@ import Form from './components/ui/Form';
 import SignIn from './components/ui/SignIn';
 import Messages from './components/ui/Messages';
 
-import { Message } from './components/ui/Messages';
-import { Wallet } from './near-wallet'; // Assuming this is the location of the Wallet class
-import { PostFeed } from './near-interface'; // Assuming this is the location of the PostFeed class
+import { Wallet } from './near-wallet';
+import { PostFeed } from './near-interface';
 import './global.scss';
+import { PostedMessage } from './model';
 
 interface Props {
   isSignedIn: boolean;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
-  const [messages, setMessages] = useState<Message[]>([]); // Assuming messages are strings
+  const [messages, setMessages] = useState<PostedMessage[]>([]); // Assuming messages are strings
 
   useEffect(() => {
     postFeed.getMessages().then(setMessages);

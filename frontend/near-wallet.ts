@@ -9,24 +9,14 @@ import { NetworkId, setupWalletSelector } from '@near-wallet-selector/core';
 import { setupLedger } from '@near-wallet-selector/ledger';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 
-interface WalletConfig {
-  createAccessKeyFor?: string;
-  network?: NetworkId;
-}
-
-interface MethodOptions {
-  contractId: string;
-  method: string;
-  args?: object;
-  gas?: string;
-  deposit?: string | null;
-}
+import { PostedMessage, WalletConfig, MethodOptions } from './model';
+import type { WalletSelector } from '@near-wallet-selector/core';
 
 const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
 
 export class Wallet {
-  walletSelector: any; // Replace with actual WalletSelector type
+  walletSelector!: WalletSelector; // Replace with actual WalletSelector type
   wallet: any; // Replace with actual Wallet type
   network: NetworkId;
   createAccessKeyFor: string | undefined | null;
@@ -84,8 +74,7 @@ export class Wallet {
     contractId,
     method,
     args = {},
-  }: MethodOptions): Promise<any> {
-    // Replace any with actual return type
+  }: MethodOptions): Promise<PostedMessage[]> {
     const { network } = this.walletSelector.options;
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 
@@ -107,7 +96,6 @@ export class Wallet {
     gas = THIRTY_TGAS,
     deposit = NO_DEPOSIT,
   }: MethodOptions): Promise<any> {
-    // Replace any with actual return type
     const outcome = await this.wallet.signAndSendTransaction({
       signerId: this.accountId!,
       receiverId: contractId,
@@ -128,7 +116,6 @@ export class Wallet {
   }
 
   async getTransactionResult(txhash: string): Promise<any> {
-    // Replace any with actual return type
     const { network } = this.walletSelector.options;
     const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 

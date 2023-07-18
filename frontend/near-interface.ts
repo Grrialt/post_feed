@@ -1,35 +1,34 @@
 import { utils } from 'near-api-js';
+import type { Wallet } from './near-wallet';
+import type { Message } from './components/ui/Messages';
+import { PostedMessage } from './model';
 
 interface PostFeedConfig {
   contractId: string;
-  walletToUse: any; // You should replace Wallet type with actual Wallet type used in your project
+  walletToUse: Wallet;
 }
 
 class PostFeed {
   contractId: string;
-  wallet: any; // You should replace any type with actual Wallet type used in your project
+  wallet: Wallet;
 
   constructor({ contractId, walletToUse }: PostFeedConfig) {
     this.contractId = contractId;
     this.wallet = walletToUse;
   }
 
-  async getMessages(): Promise<any> {
-    // Replace any with the type of messages
-    const messages = await this.wallet.viewMethod({
+  async getMessages(): Promise<PostedMessage[]> {
+    return await this.wallet.viewMethod({
       contractId: this.contractId,
       method: 'get_messages',
     });
-    console.log(messages);
-    return messages;
   }
 
   async addMessage(
     message: string,
     topic: string,
     donation: string,
-  ): Promise<any> {
-    // Replace any with the type of return value
+  ): Promise<Message> {
     const deposit = utils.format.parseNearAmount(donation) || '0';
     return await this.wallet.callMethod({
       contractId: this.contractId,

@@ -103,7 +103,9 @@ export class Wallet {
       ],
     });
 
-    return providers.getTransactionLastResult(outcome)
+    const result = providers.getTransactionLastResult(outcome);
+    console.log('result');
+    console.log(result === "" ? 'yes' : 'no');
   }
 
   // Get transaction result from the network
