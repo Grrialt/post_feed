@@ -24,6 +24,13 @@ class PostFeed {
     });
   }
 
+  async getMessagesCount(): Promise<number> {
+    return await this.wallet.viewCountMethod({
+      contractId: this.contractId,
+      method: 'total_messages',
+    });
+  }
+
   async addMessage(
     message: string,
     topic: string,

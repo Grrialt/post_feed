@@ -1,18 +1,20 @@
 import { NetworkId } from '@near-wallet-selector/core';
 
 export interface PostedMessage {
-  premium?: boolean;
   sender: string;
-  time: string;
-  donation?: string;
   text: string;
+  time: string;
   topic?: string;
+
+  premium?: boolean;
+  donation?: string;
 }
 
-export interface newMessage {
-  text: string;
-  topic: string;
-  donation: string;
+export interface viewMethodResponse {
+  block_hash: string;
+  block_height: number;
+  logs: any[];
+  result: number[];
 }
 
 export interface WalletConfig {

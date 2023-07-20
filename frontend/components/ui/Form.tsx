@@ -5,9 +5,16 @@ import './Form.scss';
 interface FormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   currentAccountId: string;
+  topicValue: string;
+  setTopicValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit, currentAccountId }) => {
+const Form: React.FC<FormProps> = ({
+  onSubmit,
+  currentAccountId,
+  topicValue,
+  setTopicValue,
+}) => {
   return (
     <form onSubmit={onSubmit}>
       <fieldset id="fieldset">
@@ -23,7 +30,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, currentAccountId }) => {
             />
           </div>
           <div className="topic">
-            <TopicDropdown />
+            <TopicDropdown value={topicValue} setValue={setTopicValue} />
           </div>
         </p>
         <p>

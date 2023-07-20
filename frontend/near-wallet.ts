@@ -9,7 +9,12 @@ import { NetworkId, setupWalletSelector } from '@near-wallet-selector/core';
 import { setupLedger } from '@near-wallet-selector/ledger';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 
-import { PostedMessage, WalletConfig, MethodOptions } from './model';
+import {
+  PostedMessage,
+  WalletConfig,
+  MethodOptions,
+  viewMethodResponse,
+} from './model';
 import type { WalletSelector } from '@near-wallet-selector/core';
 
 const THIRTY_TGAS = '30000000000000';
@@ -70,13 +75,17 @@ export class Wallet {
     window.location.replace(window.location.origin + window.location.pathname);
   }
 
+  private getProvider(): providers.JsonRpcProvider {
+    const { network } = this.walletSelector.options;
+    return new providers.JsonRpcProvider({ url: network.nodeUrl });
+  }
+
   async viewMethod({
     contractId,
     method,
     args = {},
   }: MethodOptions): Promise<PostedMessage[]> {
-    const { network } = this.walletSelector.options;
-    const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
+    const provider = this.getProvider();
 
     let res = await provider.query({
       request_type: 'call_function',
@@ -86,7 +95,29 @@ export class Wallet {
       finality: 'optimistic',
     });
 
-    return JSON.parse(Buffer.from((res as any).result).toString());
+    return JSON.parse(
+      Buffer.from((res as viewMethodResponse).result).toString(),
+    );
+  }
+
+  async viewCountMethod({
+    contractId,
+    method,
+    args = {},
+  }: MethodOptions): Promise<number> {
+    const provider = this.getProvider();
+
+    let res = await provider.query({
+      request_type: 'call_function',
+      account_id: contractId,
+      method_name: method,
+      args_base64: Buffer.from(JSON.stringify(args)).toString('base64'),
+      finality: 'optimistic',
+    });
+
+    return JSON.parse(
+      Buffer.from((res as viewMethodResponse).result).toString(),
+    );
   }
 
   async callMethod({

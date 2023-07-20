@@ -16,10 +16,13 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
-  const [messages, setMessages] = useState<PostedMessage[]>([]); // Assuming messages are strings
+  const [messages, setMessages] = useState<PostedMessage[]>([]);
+  const [messagesCount, setMessagesCount] = useState<number>(0);
+  const [topicValue, setTopicValue] = useState('');
 
   useEffect(() => {
     postFeed.getMessages().then(setMessages);
+    postFeed.getMessagesCount().then(setMessagesCount);
   }, []);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,8 +37,11 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
     const messages = await postFeed.getMessages();
 
     setMessages(messages);
+    postFeed.getMessagesCount().then(setMessagesCount);
+
     message.value = '';
     topic.value = '';
+    setTopicValue('');
     donation.value = '0';
     fieldset.disabled = false;
     message.focus();
@@ -71,14 +77,21 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
 
         <hr />
         {isSignedIn ? (
-          <Form onSubmit={onSubmit} currentAccountId={accountId} />
+          <Form
+            onSubmit={onSubmit}
+            currentAccountId={accountId}
+            topicValue={topicValue}
+            setTopicValue={setTopicValue}
+          />
         ) : (
           <SignIn />
         )}
 
         <hr />
 
-        {!!messages.length && <Messages messages={messages} />}
+        {!!messages.length && (
+          <Messages messages={messages} messagesCount={messagesCount} />
+        )}
       </main>
     </>
   );

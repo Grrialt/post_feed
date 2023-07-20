@@ -10,8 +10,12 @@ const generateTags = () => {
   return tags;
 };
 
-const TopicDropdown: React.FC = () => {
-  const [input, setInput] = useState('');
+interface Props {
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const TopicDropdown: React.FC<Props> = ({ value, setValue }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
 
@@ -25,18 +29,18 @@ const TopicDropdown: React.FC = () => {
   }, [showDropdown]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
+    const inputValue = event.target.value;
 
     // Only update input if all words start with '#' or if it's empty
-    const allWordsStartWithHash = value
+    const allWordsStartWithHash = inputValue
       .split(' ')
       .every((word) => word.startsWith('#') || word === '');
 
     if (allWordsStartWithHash) {
-      setInput(value);
+      setValue(inputValue);
 
       // Show the dropdown if the input ends with #
-      if (value.endsWith('#')) {
+      if (inputValue.endsWith('#')) {
         setShowDropdown(true);
       } else {
         setShowDropdown(false);
@@ -45,8 +49,8 @@ const TopicDropdown: React.FC = () => {
   };
 
   const handleTagClick = (tag: string) => {
-    // Append the clicked tag to the input (replace '#' with the tag)
-    setInput((prevInput) => prevInput.slice(0, prevInput.length - 1) + tag);
+    // Append the clicked tag to the input (replace '#' with the tag//)
+    setValue((prevInput) => prevInput.slice(0, prevInput.length - 1) + tag);
     setShowDropdown(false);
   };
 
@@ -55,7 +59,7 @@ const TopicDropdown: React.FC = () => {
       <input
         id="topic"
         type="text"
-        value={input}
+        value={value}
         onChange={handleInputChange}
         className="inputField"
         autoComplete="off"
