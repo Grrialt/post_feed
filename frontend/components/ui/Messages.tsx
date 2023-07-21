@@ -55,7 +55,7 @@ const Messages: React.FC<MessagesProps> = ({ messages, messagesCount }) => {
   return (
     <>
       <h2>Messages: {messagesCount}</h2>
-      {messages.reverse().map((message, i) => {
+      {messages.map((message, i) => {
         // Convert timestamp to date (assuming nanoseconds)
         let date = new Date(parseInt(message.time) / 1000000);
 
@@ -69,11 +69,10 @@ const Messages: React.FC<MessagesProps> = ({ messages, messagesCount }) => {
                 <strong className="sender-name">{message.sender + ' '}</strong>
                 <small className="message-time">{timeAgo(date)}</small>
               </div>
-              <strong className="donation">
-                {message.donation && message.donation !== '0'
-                  ? 'Ⓝ' + message.donation
-                  : ''}
-              </strong>
+              {message.donation !== '0' &&
+                typeof message.donation !== 'undefined' && (
+                  <strong className="donation">{'Ⓝ' + message.donation}</strong>
+                )}
             </div>
             <div className="message-text">{message.text}</div>
             <span className="message-topic">

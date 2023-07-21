@@ -10,12 +10,12 @@ const generateTags = () => {
   return tags;
 };
 
-interface Props {
+type TopicDropdownProps = {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-const TopicDropdown: React.FC<Props> = ({ value, setValue }) => {
+const TopicDropdown = ({ value, setValue }: TopicDropdownProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
 

@@ -18,10 +18,12 @@ class PostFeed {
   }
 
   async getMessages(): Promise<PostedMessage[]> {
-    return await this.wallet.viewMethod({
+    const result = await this.wallet.viewMethod({
       contractId: this.contractId,
       method: 'get_messages',
     });
+
+    return result.reverse();
   }
 
   async getMessagesCount(): Promise<number> {
