@@ -1,6 +1,5 @@
 import 'regenerator-runtime/runtime';
-import React, { useState, useEffect, FormEvent, useCallback } from 'react';
-import { debounce } from 'lodash';
+import React, { useState, useEffect, FormEvent } from 'react';
 import Form from './components/ui/Form';
 import SignIn from './components/ui/SignIn';
 import Messages from './components/ui/Messages';
@@ -21,33 +20,24 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
   const [messagesCount, setMessagesCount] = useState<number>(0);
   const [topicValue, setTopicValue] = useState('');
 
-  const debouncedGetMessagesCount = useCallback(
-    debounce(() => {
-      postFeed.getMessagesCount().then(setMessagesCount);
-    }, 1000),
-    []
-  );
-
   useEffect(() => {
     postFeed.getMessages().then(setMessages);
     postFeed.getMessagesCount().then(setMessagesCount);
   }, []);
 
-  useEffect(() => {
-    debouncedGetMessagesCount();
-  }, [messages]);
-
-  const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { fieldset, message, topic, donation } = e.currentTarget.elements as any;
+    const { fieldset, message, topic, donation } = e.currentTarget
+      .elements as any;
 
     fieldset.disabled = true;
 
     await postFeed.addMessage(message.value, topic.value, donation.value);
-
     const messages = await postFeed.getMessages();
+
     setMessages(messages);
+    postFeed.getMessagesCount().then(setMessagesCount);
 
     message.value = '';
     topic.value = '';
@@ -55,7 +45,7 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
     donation.value = '0';
     fieldset.disabled = false;
     message.focus();
-  }, []);
+  };
 
   const signIn = (): void => {
     wallet.signIn();
@@ -71,18 +61,20 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
     <>
       <main>
         <table>
-          <tr>
-            <td>
-              <h1>Decentralize Your Posts</h1>
-            </td>
-            <td>
-              {isSignedIn ? (
-                <button onClick={signOut}>Log out</button>
-              ) : (
-                <button onClick={signIn}>Log in</button>
-              )}
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                <h1>Decentralize Your Posts</h1>
+              </td>
+              <td>
+                {isSignedIn ? (
+                  <button onClick={signOut}>Log out</button>
+                ) : (
+                  <button onClick={signIn}>Log in</button>
+                )}
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <hr />
