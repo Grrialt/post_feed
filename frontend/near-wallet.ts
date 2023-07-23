@@ -21,8 +21,8 @@ const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
 
 export class Wallet {
-  walletSelector!: WalletSelector; // Replace with actual WalletSelector type
-  wallet: any; // Replace with actual Wallet type
+  walletSelector!: WalletSelector;
+  wallet: any;
   network: NetworkId;
   createAccessKeyFor: string | undefined | null;
   accountId: string | undefined | null;
@@ -147,8 +147,7 @@ export class Wallet {
   }
 
   async getTransactionResult(txhash: string): Promise<any> {
-    const { network } = this.walletSelector.options;
-    const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
+    const provider = this.getProvider();
 
     const transaction = await provider.txStatus(txhash, 'unnused');
     return providers.getTransactionLastResult(transaction);
