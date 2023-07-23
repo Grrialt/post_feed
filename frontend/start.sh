@@ -8,16 +8,24 @@ start () {
   parcel index.html
 }
 
-alert () {
+alert1 () {
   echo "======================================================"
   echo "It looks like you forgot to set your environment variables"
   echo ">> Set the environment variables in the CI/CD settings"
   echo "======================================================"
 }
 
+alert2 () {
+  echo "======================================================"
+  echo "DEV_ACCOUNT_FILE does not exist"
+  echo "======================================================"
+}
+
 # Check if the required environment variables are set
 if [ -z "$CONTRACT_NAME" ]; then
-  alert
+  alert1
+if if [ -f "$DEV_ACCOUNT_FILE" ]; then
+  alert2
 else
   start
 fi
