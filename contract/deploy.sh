@@ -4,4 +4,4 @@
 npm run build
 
 # deploy the contract
-near deploy --accountId anadev.testnet --wasmFile build/contract.wasm
+near deploy --accountId dev-1689336253218-95717993882079 --wasmFile build/contract.wasm
