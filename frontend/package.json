@@ -5,7 +5,7 @@
   "scripts": {
     "start": "./start.sh",
     "start:headless": "env-cmd -f '../contract/neardev/dev-account.env' parcel index.html",
-    "build": "parcel build index.html",
+    "build": "parcel index.html",
     "test:e2e": "npm run start:headless & npm run cypress:run",
     "cypress:run": "cd .cypress && cypress run",
     "cypress:open": "cypress open --browser chromium"
