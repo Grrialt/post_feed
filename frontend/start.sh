@@ -5,7 +5,7 @@ NC='\033[0m' # No Color
 
 start () {
   echo The app is starting!
-  parcel index.html --open
+  parcel index.html
 }
 
 alert () {
