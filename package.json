@@ -1,0 +1,33 @@
+{
+  "name": "guest-book-js",
+  "version": "1.0.0",
+  "license": "(MIT AND Apache-2.0)",
+  "scripts": {
+    "start": "cd frontend && pnpm run start",
+    "deploy": "cd contract && pnpm run deploy",
+    "build": "pnpm run build:contract && pnpm run build:web",
+    "build:web": "cd frontend && pnpm run build",
+    "build:contract": "cd contract && pnpm run build",
+    "test": "pnpm run build:contract && pnpm run test:integration && pnpm run test:e2e",
+    "test:unit": "cd contract && pnpm test",
+    "test:integration": "cd integration-tests && pnpm test -- -- \"./contract/build/contract.wasm\"",
+    "test:e2e": "cd frontend && pnpm run test:e2e",
+    "postinstall": "cd frontend && pnpm install && cd .. && cd integration-tests && pnpm install && cd .. && cd contract && pnpm install"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "near-cli": "^3.3.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
+    "react-router-dom": "^6.14.1",
+    "sort-by": "^1.2.0"
+  }
+}
