@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "license": "(MIT AND Apache-2.0)",
   "scripts": {
-    "start": "cd frontend && pnpm run start",
-    "deploy": "cd contract && pnpm run deploy",
-    "build": "pnpm run build:contract && pnpm run build:web",
-    "build:web": "cd frontend && pnpm run build",
-    "build:contract": "cd contract && pnpm run build",
-    "test": "pnpm run build:contract && pnpm run test:integration && pnpm run test:e2e",
-    "test:unit": "cd contract && pnpm test",
-    "test:integration": "cd integration-tests && pnpm test -- -- \"./contract/build/contract.wasm\"",
-    "test:e2e": "cd frontend && pnpm run test:e2e",
-    "postinstall": "cd frontend && pnpm install && cd .. && cd integration-tests && pnpm install && cd .. && cd contract && pnpm install"
+    "start": "cd frontend && yarn start",
+    "deploy": "cd contract && yarn deploy",
+    "build": "yarn build:contract && yarn build:web",
+    "build:web": "cd frontend && yarn build",
+    "build:contract": "cd contract && yarn build",
+    "test": "yarn build:contract && yarn test:integration && yarn test:e2e",
+    "test:unit": "cd contract && yarn test",
+    "test:integration": "cd integration-tests && yarn test -- -- \"./contract/build/contract.wasm\"",
+    "test:e2e": "cd frontend && yarn test:e2e",
+    "postinstall": "cd frontend && yarn install && cd .. && cd integration-tests && yarn install && cd .. && cd contract && yarn install"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

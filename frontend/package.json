@@ -6,7 +6,7 @@
     "start": "./start.sh",
     "start:headless": "env-cmd -f '../contract/neardev/dev-account.env' parcel index.html",
     "build": "parcel build index.html --public-url ./",
-    "test:e2e": "pnpm run start:headless & pnpm run cypress:run",
+    "test:e2e": "yarn start:headless & yarn cypress:run",
     "cypress:run": "cd .cypress && cypress run",
     "cypress:open": "cypress open --browser chromium"
   },
