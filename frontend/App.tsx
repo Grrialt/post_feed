@@ -48,6 +48,7 @@ const App: React.FC<Props> = ({ isSignedIn, postFeed, wallet }) => {
   };
 
   const signIn = (): void => {
+    console.log(process.env.CONTRACT_NAME)
     wallet.signIn();
   };
 
