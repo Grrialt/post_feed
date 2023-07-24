@@ -4,4 +4,4 @@
 pnpm run build
 
 # deploy the contract
-near dev-deploy --wasmFile build/contract.wasm
+near deploy --accountId dev-1689336253218-95717993882079 --wasmFile build/contract.wasm
